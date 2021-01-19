@@ -32,4 +32,4 @@ images:
 tags:
   - gcp-cloud-build-deploy-cloud-run
   - gcp-cloud-build-deploy-cloud-run-managed
-  - w-cloud-build
+  - test-build1
