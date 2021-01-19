@@ -3,7 +3,7 @@ FROM golang:1.15.6-alpine3.12 AS test
 RUN mkdir /go/src/dialog
 COPY ./* /go/src/dialog/
 ENV GOPATH=""
-RUN cd /go/src/dialog && go mod init meal.com/dialog
+RUN cd /go/src/dialog && ls -ltrh && go mod init meal.com/dialog
 RUN go build && chmod 777 ./dialog
 
 ENTRYPOINT [ "dialog" ]
