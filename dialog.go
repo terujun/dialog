@@ -8,7 +8,8 @@ import (
 )
 
 func postarticleHandler(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(w, req.Method)
+	fmt.Fprintf(w, "caught")
+	fmt.Println(req)
 }
 
 func main() {
