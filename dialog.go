@@ -9,6 +9,7 @@ import (
 
 func postarticleHandler(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "caught")
+	fmt.Println("I display req!!!!")
 	fmt.Println(req)
 }
 
