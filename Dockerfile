@@ -6,4 +6,4 @@ COPY ./* /go/src/dialog/
 RUN cd /go/src/dialog && ls -ltrh && go mod init meal.com/dialog
 RUN go build /go/src/dialog/dialog.go && chmod 777 ./dialog
 
-ENTRYPOINT [ "dialog" ]
+ENTRYPOINT [ "/go/src/dialog/dialog" ]
