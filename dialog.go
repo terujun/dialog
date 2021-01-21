@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -10,7 +11,9 @@ import (
 func postarticleHandler(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "caught")
 	fmt.Println("I display req!!!!")
-	fmt.Println(req)
+	body, _ := ioutil.ReadAll(req.Body)
+	fmt.Println(string(body))
+
 }
 
 func main() {
