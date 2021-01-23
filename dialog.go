@@ -13,7 +13,6 @@ const (
 	modalopenURL = "https://slack.com/api/views.open"
 )
 
-//slackにより発火されたmodalイベントの初回リクエスト受信用
 type Appstart struct {
 	Type     string `json:"type"`
 	Token    string `json:"token"`
