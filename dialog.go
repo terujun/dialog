@@ -182,10 +182,15 @@ func postarticleHandler(w http.ResponseWriter, req *http.Request) {
 
 	//ボディ(JSON)取得
 	body, err := ioutil.ReadAll(req.Body)
+	fmt.Println("string body")
 	fmt.Println(string(body))
+	fmt.Println("body normal")
+¥	fmt.Printf("%T %v", body,body)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+
 
 	// jsonを構造体へデコード
 	var appstart Appstart
