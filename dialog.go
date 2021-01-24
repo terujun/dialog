@@ -58,6 +58,10 @@ func SendSlackModal(webhookurl string, TriggerID string) error {
 	fmt.Println("dumpを出力するぞ")
 	fmt.Printf("%s", dump)
 
+	//body確認用
+	httpsendbody, _ := ioutil.ReadAll(req.Body)
+	fmt.Println(string(httpsendbody))
+
 	//client := &http.Client{Timeout: 10 * time.Second}
 	client := new(http.Client)
 
