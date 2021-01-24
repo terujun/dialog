@@ -36,7 +36,7 @@ type Appstart struct {
 
 func SendSlackModal(webhookurl string, TriggerID string) error {
 	//trigger iD登録
-	var modalcontent = []byte(`{
+	var modalcontent = strings.Trim(`{
 		"trigger_id": TriggerID,
 		"view": {
 			"title": {
@@ -260,10 +260,10 @@ func SendSlackModal(webhookurl string, TriggerID string) error {
 			],
 			"type": "modal"
 		}
-	}`)
-	modalcontent = []byte(strings.NewReplacer("¥n", "").Replace(string(modalcontent)))
+	}`, "¥n")
+	//modalcontent = []byte(strings.NewReplacer("¥n", "").Replace(string(modalcontent)))
 	fmt.Println("modal request")
-	fmt.Println(string(modalcontent))
+	fmt.Println(modalcontent)
 	//Modalようリクエスト作成
 	/*	req, err := http.NewRequest(http.MethodPost, webhookurl, bytes.NewBuffer(modalcontent))
 		if err != nil {
