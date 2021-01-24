@@ -55,7 +55,7 @@ func SendSlackModal(webhookurl string, TriggerID string) error {
 
 	dump, _ := httputil.DumpRequestOut(req, true)
 	fmt.Println("dumpを出力するぞ")
-	fmt.Println("%s", dump)
+	fmt.Printf("%s", dump)
 
 	//client := &http.Client{Timeout: 10 * time.Second}
 	client := new(http.Client)
