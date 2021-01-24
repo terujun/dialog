@@ -182,10 +182,9 @@ func postarticleHandler(w http.ResponseWriter, req *http.Request) {
 
 	//ボディ(JSON)取得
 	body, err := ioutil.ReadAll(req.Body)
-	fmt.Println("string body")
-	fmt.Println(string(body))
-	fmt.Println("body normal")
-	fmt.Printf("%T %v", body, body)
+	postarticlejsonbody := string(body)[7:]
+	fmt.Println("string new body")
+	fmt.Println(string(postarticlejsonbody))
 	if err != nil {
 		log.Fatal(err)
 	}
