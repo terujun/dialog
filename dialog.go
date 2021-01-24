@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 )
 
@@ -182,7 +183,8 @@ func postarticleHandler(w http.ResponseWriter, req *http.Request) {
 
 	//ボディ(JSON)取得
 	body, err := ioutil.ReadAll(req.Body)
-	postarticlejsonbody := string(body)[8:]
+	defer req.Body.Close()
+	postarticlejsonbody, _ := url.QueryUnescape(string(body)[8:])
 	fmt.Println("string new body")
 	fmt.Println(string(postarticlejsonbody))
 	if err != nil {
