@@ -189,7 +189,7 @@ func postarticleHandler(w http.ResponseWriter, req *http.Request) {
 
 	// jsonを構造体へデコード
 	var appstart Appstart
-	err = json.Unmarshal(body, &appstart)
+	err = json.Unmarshal([]byte(body), &appstart)
 	if err != nil {
 		log.Fatal(err)
 	}
