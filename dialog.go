@@ -263,7 +263,7 @@ func SendSlackModal(webhookurl string, TriggerID string) error {
 	}`)
 	modalcontent = []byte(strings.NewReplacer("¥n", "").Replace(string(modalcontent)))
 	fmt.Println("modal request")
-	fmt.Println(modalcontent)
+	fmt.Println(string(modalcontent))
 	//Modalようリクエスト作成
 	/*	req, err := http.NewRequest(http.MethodPost, webhookurl, bytes.NewBuffer(modalcontent))
 		if err != nil {
