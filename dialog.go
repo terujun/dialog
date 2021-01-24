@@ -178,13 +178,14 @@ func SendSlackModal(webhookurl string, TriggerID string) error {
 
 func postarticleHandler(w http.ResponseWriter, req *http.Request) {
 	//受信確認用
-	fmt.Fprintf(w, "caught")
 	fmt.Println("I display req!!!!")
 
 	//ボディ(JSON)取得
 	body, err := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
+	//URLデコード
 	postarticlejsonbody, _ := url.QueryUnescape(string(body)[8:])
+	//テスト出力
 	fmt.Println("string new body")
 	fmt.Println(string(postarticlejsonbody))
 	if err != nil {
@@ -199,6 +200,7 @@ func postarticleHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	//取得確認出力
+	fmt.Println("triggerid")
 	fmt.Println(appstart.TriggerID)
 
 	//Modalの送信
