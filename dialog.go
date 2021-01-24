@@ -74,6 +74,11 @@ func SendSlackModal(webhookurl string, TriggerID string) error {
 	//レスポンス確認
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(resp.Body)
+	responsebody, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("response")
+	fmt.Println(string(responsebody))
+
+	fmt.Println("response dumpするっぞ")
 	dumpResp, _ := httputil.DumpResponse(resp, true)
 	fmt.Printf("%s", dumpResp)
 	if buf.String() != "ok" {
