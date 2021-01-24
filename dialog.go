@@ -1,13 +1,17 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
+	"time"
 )
 
 const (
@@ -42,28 +46,28 @@ func SendSlackModal(webhookurl string, TriggerID string) error {
 	fmt.Println(modalcontent)
 
 	//Modalリクエスト作成
-	/*	req, err := http.NewRequest(http.MethodPost, webhookurl, bytes.NewBuffer(modalcontent))
-		if err != nil {
-			return err
-		}
-		//httpヘッダ追加
-		req.Header.Add("Content-Type", "application/json")
+	req, err := http.NewRequest(http.MethodPost, webhookurl, strings.NewReader(modalcontent))
+	if err != nil {
+		return err
+	}
+	//httpヘッダ追加
+	req.Header.Add("Content-Type", "application/json")
 
-		client := &http.Client{Timeout: 10 * time.Second}
+	client := &http.Client{Timeout: 10 * time.Second}
 
-		//送信
-		resp, err := client.Do(req)
-		if err != nil {
-			return err
-		}
+	//送信
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
 
-		//レスポンス確認
-		buf := new(bytes.Buffer)
-		buf.ReadFrom(resp.Body)
-		if buf.String() != "ok" {
-			return errors.New("Non-ok response returned from Slack")
-		}
-	*/
+	//レスポンス確認
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(resp.Body)
+	if buf.String() != "ok" {
+		return errors.New("Non-ok response returned from Slack")
+	}
+
 	return nil
 
 }
@@ -74,7 +78,6 @@ func postarticleHandler(w http.ResponseWriter, req *http.Request) {
 
 	//ボディ(JSON)取得
 	body, err := ioutil.ReadAll(req.Body)
-	fmt.Printf("Bodyの形は%T", body)
 	defer req.Body.Close()
 	//URLデコード
 	postarticlejsonbody, _ := url.QueryUnescape(string(body)[8:])
