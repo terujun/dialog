@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
 )
 
 const (
@@ -260,6 +261,7 @@ func SendSlackModal(webhookurl string, TriggerID string) error {
 			"type": "modal"
 		}
 	}`)
+	modalcontent = []byte(strings.NewReplacer("¥n", "").Replace(string(modalcontent)))
 	fmt.Println("modal request")
 	fmt.Println(modalcontent)
 	//Modalようリクエスト作成
