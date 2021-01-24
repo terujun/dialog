@@ -8,10 +8,10 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/http/httputil"
 	"net/url"
 	"os"
 	"strings"
-	"time"
 )
 
 const (
@@ -53,7 +53,12 @@ func SendSlackModal(webhookurl string, TriggerID string) error {
 	//httpヘッダ追加
 	req.Header.Add("Content-Type", "application/json")
 
-	client := &http.Client{Timeout: 10 * time.Second}
+	dump, _ := httputil.DumpRequestOut(req, true)
+	fmt.Println("dumpを出力するぞ")
+	fmt.Println("%s", dump)
+
+	//client := &http.Client{Timeout: 10 * time.Second}
+	client := new(http.Client)
 
 	//送信
 	resp, err := client.Do(req)
