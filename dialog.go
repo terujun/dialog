@@ -11,7 +11,6 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"os"
-	"strings"
 )
 
 const (
@@ -46,7 +45,8 @@ func SendSlackModal(webhookurl string, TriggerID string) error {
 	fmt.Println(modalcontent)
 
 	//Modalリクエスト作成
-	req, err := http.NewRequest(http.MethodPost, webhookurl, strings.NewReader(modalcontent))
+	//req, err := http.NewRequest(http.MethodPost, webhookurl, strings.NewReader(modalcontent))
+	req, err := http.NewRequest(http.MethodPost, webhookurl, nil)
 	if err != nil {
 		return err
 	}
