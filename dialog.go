@@ -74,7 +74,7 @@ func postarticleHandler(w http.ResponseWriter, req *http.Request) {
 
 	//ボディ(JSON)取得
 	body, err := ioutil.ReadAll(req.Body)
-	println("Bodyの形は%T", body)
+	fmt.Printf("Bodyの形は%T", body)
 	defer req.Body.Close()
 	//URLデコード
 	postarticlejsonbody, _ := url.QueryUnescape(string(body)[8:])
