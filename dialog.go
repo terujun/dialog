@@ -16,7 +16,7 @@ import (
 
 const (
 	modalopenURL = "https://slack.com/api/views.open"
-	channelat    = "xoxb-1648187281587-1656268788213-XrfXRjQEK15WEN0psG6Qe6Wv"
+	channelat    = "testtesttest"
 )
 
 type Appstart struct {
