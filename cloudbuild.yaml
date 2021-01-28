@@ -8,6 +8,12 @@ steps:
       - .
       - '-f'
       - Dockerfile
+      - '--build-arg'
+      - 'TOKEN=$_TOKEN'
+      - '--build-arg'
+      - 'PORT=$_PORT'
+      - '--build-arg'
+      - 'CONFIGDIRPATH=$_CONFIGDIRPATH'
     id: Build
   - name: gcr.io/cloud-builders/docker
     args:
