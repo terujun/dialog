@@ -1,2 +1,4 @@
-*.mod
+go.mod
+go.sum
 dialog
+main
