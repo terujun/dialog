@@ -58,6 +58,7 @@ func main() {
 
 	//token情報取得
 	token := os.Getenv("TOKEN")
+	log.Printf("Token is %s", token)
 	if token == "" {
 		//errorハンドリングを後で記載
 		log.Printf("Tokenが設定されていません")
