@@ -14,8 +14,6 @@ steps:
       - 'PORT=$_PORT'
       - '--build-arg'
       - 'CONFIGDIRPATH=$_CONFIGDIRPATH'
-      - '--build-arg'
-      - 'GOPATH=""'
     id: Build
   - name: gcr.io/cloud-builders/docker
     args:
