@@ -58,7 +58,6 @@ func main() {
 
 	//token情報取得
 	token := os.Getenv("TOKEN")
-	log.Printf("Token is %s", token)
 	if token == "" {
 		//errorハンドリングを後で記載
 		log.Printf("Tokenが設定されていません")
@@ -67,7 +66,7 @@ func main() {
 	//config場所取得
 	configsDirPath := os.Getenv("CONFIGDIRPATH")
 	if configsDirPath == "" {
-		configsDirPath = "/home/sysmgr/go/dialog/configs/config/"
+		configsDirPath = "/home/go/dialog/configs/config/"
 		log.Printf("defaulting to configsDirPath %s", configsDirPath)
 	}
 
