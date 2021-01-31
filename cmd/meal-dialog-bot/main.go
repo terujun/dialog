@@ -91,9 +91,6 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 	payloadJSON := c.FormValue("payload")
 	var payload interface{}
 
-	//受信確認あとで消す。
-	log.Printf("受信したで")
-
 	//payloadをJSONとして取得
 	err := json.Unmarshal([]byte(payloadJSON), &payload)
 	if err != nil {
@@ -106,6 +103,9 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 		return c.String(http.StatusInternalServerError, "Error")
 	}
 	requestType := pointRequesttype.(string)
+
+	//受信確認あとで消す。
+	log.Printf("受信したで")
 
 	//type別にコールバックIDを取得する
 	var iCallbackID interface{}
@@ -128,7 +128,7 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 		}
 
 	}
-	return c.String(http.StatusForbidden, "Error")
+	//return c.String(http.StatusForbidden, "Error")
 
 	//とりあえずOK.あとで消す
 	return c.String(http.StatusOK, "Ok")
