@@ -7,6 +7,7 @@ received from Slack.
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -14,6 +15,7 @@ import (
 	"path/filepath"
 
 	"github.com/labstack/echo"
+	"github.com/mattn/go-jsonpointer"
 	"github.com/terujun/dialog/pkg/meal-slack-bot/config"
 	"github.com/terujun/dialog/pkg/meal-slack-bot/file"
 )
@@ -66,7 +68,7 @@ func main() {
 	//config場所取得
 	configsDirPath := os.Getenv("CONFIGDIRPATH")
 	if configsDirPath == "" {
-		configsDirPath = "/home/go/dialog/configs/config/"
+		configsDirPath = "/home/　go/dialog/configs/config/"
 		log.Printf("defaulting to configsDirPath %s", configsDirPath)
 	}
 
@@ -86,48 +88,47 @@ func main() {
 }
 
 func gateway(c echo.Context, appConfig config.Config, configsDirPath string) error {
-	//payloadJSON := c.FormValue("payload")
-	//var payload interface{}
+	payloadJSON := c.FormValue("payload")
+	var payload interface{}
 
 	//受信確認あとで消す。
 	log.Printf("受信したで")
 
-	/*
-		//payloadをJSONとして取得
-		err := json.Unmarshal([]byte(payloadJSON), &payload)
-		if err != nil {
-			return c.String(http.StatusInternalServerError, "Error")
+	//payloadをJSONとして取得
+	err := json.Unmarshal([]byte(payloadJSON), &payload)
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "Error")
+	}
+
+	//type取得
+	pointRequesttype, err := jsonpointer.Get(payload, "/type")
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "Error")
+	}
+	requestType := pointRequesttype.(string)
+
+	//type別にコールバックIDを取得する
+	var iCallbackID interface{}
+	switch requestType {
+	case "shortcut":
+		iCallbackID, _ = jsonpointer.Get(payload, "/callback_id")
+	case "view_submit":
+		iCallbackID, _ = jsonpointer.Get(payload, "/view/callback_id")
+	}
+	callbackID := iCallbackID.(string)
+
+	//callbackID種類ごとの処理を記載
+	if len(callbackID) > 0 {
+		switch callbackID {
+		case "meal_reg_call":
+			fmt.Printf("callbackID is %s", callbackID)
+			//return HandleOpenHydrationForm(c, appConfig, configsDirPath, payload)
+		default:
+			c.Echo().Logger.Warn("Unrecognized callbackID:", callbackID)
 		}
 
-		//type取得
-		pointRequesttype, err := jsonpointer.Get(payload, "/type")
-		if err != nil {
-			return c.String(http.StatusInternalServerError, "Error")
-		}
-		requestType := pointRequesttype.(string)
-
-		//type別にコールバックIDを取得する
-		var iCallbackID interface{}
-		switch requestType {
-		case "shortcut":
-			iCallbackID, _ = jsonpointer.Get(payload, "/callback_id")
-		case "view_submit":
-			iCallbackID, _ = jsonpointer.Get(payload, "/view/callback_id")
-		}
-		callbackID := iCallbackID.(string)
-
-		//callbackID種類ごとの処理を記載
-		if len(callbackID) > 0 {
-			switch callbackID {
-			case "meal_reg_call":
-				return HandleOpenHydrationForm(c, appConfig, configsDirPath, payload)
-			default:
-				c.Echo().Logger.Warn("Unrecognized callbackID:", callbackID)
-			}
-
-		}
-		return c.String(http.StatusForbidden, "Error")
-	*/
+	}
+	return c.String(http.StatusForbidden, "Error")
 
 	//とりあえずOK.あとで消す
 	return c.String(http.StatusOK, "Ok")
