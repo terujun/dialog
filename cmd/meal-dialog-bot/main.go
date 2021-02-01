@@ -112,10 +112,12 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 	switch requestType {
 	case "shortcut":
 		iCallbackID, _ = jsonpointer.Get(payload, "/callback_id")
+		fmt.Printf("callbakid is getted")
 	case "view_submit":
 		iCallbackID, _ = jsonpointer.Get(payload, "/view/callback_id")
 	}
 	callbackID := iCallbackID.(string)
+	fmt.Printf("callbackID is %s", callbackID)
 
 	//callbackID種類ごとの処理を記載
 	if len(callbackID) > 0 {
