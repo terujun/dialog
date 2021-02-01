@@ -18,6 +18,7 @@ import (
 	"github.com/mattn/go-jsonpointer"
 	"github.com/terujun/dialog/pkg/meal-slack-bot/config"
 	"github.com/terujun/dialog/pkg/meal-slack-bot/file"
+	"github.com/terujun/dialog/pkg/meal-slack-bot/slack"
 )
 
 //config.jsonの読み込み処理
@@ -123,8 +124,8 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 	if len(callbackID) > 0 {
 		switch callbackID {
 		case "meal_reg_call":
-			fmt.Printf("callbackID is %s", callbackID)
-			//return HandleOpenHydrationForm(c, appConfig, configsDirPath, payload)
+			//fmt.Printf("callbackID is %s", callbackID)
+			return HandleOpenHydrationForm(c, appConfig, configsDirPath, payload)
 		default:
 			c.Echo().Logger.Warn("Unrecognized callbackID:", callbackID)
 		}
@@ -136,21 +137,29 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 	return c.String(http.StatusOK, "Ok")
 }
 
-/*適宜追加していく
 func HandleOpenHydrationForm(c echo.Context, appConfig config.Config, configsDirPath string, payload interface{}) error {
 
 	//非同期処理を記載
-		go func (){
-			slackRepo := &repositories.SlackRepository{
-				Token:	appConfig.Slack.Token,
-				ViewDirPath:filepath.Join(configsDirPath,"views"),
-			}
-
+	go func() {
+		slackRepo := &slack.SlackRepository{
+			Token:        appConfig.Slack.Token,
+			ViewsDirPath: filepath.Join(configsDirPath, "views"),
 		}
+
+		//triggerID取得
+		triggerID, _ := jsonpointer.Get(payload, "/trigger_id")
+
+		_, err := slackRepo.OpenHydrationAddView(triggerID.(string))
+		if err != nil {
+			c.Echo().Logger.Error(err)
+		}
+
+	}()
 	// ステータス200でレスポンスを返す。
 	return c.String(http.StatusOK, "Ok")
 }
 
+/*
 func (repo *SlackRepository) OpenHydrationAddView(triggerID string) ([]byte, error) {
 	var err error
 	var res []byte
