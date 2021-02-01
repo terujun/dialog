@@ -141,6 +141,7 @@ func HandleOpenHydrationForm(c echo.Context, appConfig config.Config, configsDir
 
 	//非同期処理を記載
 	go func() {
+		fmt.Println("go funcまできたよ")
 		slackRepo := &slack.SlackRepository{
 			Token:        appConfig.Slack.Token,
 			ViewsDirPath: filepath.Join(configsDirPath, "views"),
