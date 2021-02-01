@@ -94,12 +94,14 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 	//payloadをJSONとして取得
 	err := json.Unmarshal([]byte(payloadJSON), &payload)
 	if err != nil {
+		fmt.Printf("jsonの分解に失敗")
 		return c.String(http.StatusInternalServerError, "Error")
 	}
 
 	//type取得
 	pointRequesttype, err := jsonpointer.Get(payload, "/type")
 	if err != nil {
+		fmt.Printf("typeの取得に失敗")
 		return c.String(http.StatusInternalServerError, "Error")
 	}
 	requestType := pointRequesttype.(string)
