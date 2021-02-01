@@ -117,7 +117,7 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 		iCallbackID, _ = jsonpointer.Get(payload, "/view/callback_id")
 	}
 	callbackID := iCallbackID.(string)
-	fmt.Printf("callbackID is %s", callbackID)
+	fmt.Printf("callbackID is  %s", callbackID)
 
 	//callbackID種類ごとの処理を記載
 	if len(callbackID) > 0 {
