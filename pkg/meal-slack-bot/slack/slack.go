@@ -103,10 +103,10 @@ func (repo *SlackRepository) OpenHydrationAddView(triggerID string) ([]byte, err
 
 func PostJSON(token string, command string, requestParamasJSON string) ([]byte, error) {
 	client := &http.Client{}
-	req, _ := http.NewRequest("POST", "https://slack.com/api/"+command, strings.NewReader(requestParamasJSON))
-	req.Header.Add("Content-type", "application/json")
-	req.Header.Add("Authorization", "Bearer "+token)
-	fmt.Println(token)
+	//req, _ := http.NewRequest("POST", "https://slack.com/api/"+command, strings.NewReader(requestParamasJSON))
+	//req.Header.Add("Content-type", "application/json")
+	//req.Header.Add("Authorization", "Bearer "+token)
+	req, _ := http.NewRequest("POST", "https://slack.com/api/view.open", strings.NewReader("test"))
 
 	resp, err := client.Do(req)
 	if err != nil {
