@@ -9,7 +9,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -85,6 +84,7 @@ func main() {
 	e.POST("/postarticle", func(c echo.Context) error {
 		return gateway(c, appConfig, configsDirPath)
 	})
+	/*テスト用
 	e.GET("/test", func(c echo.Context) error {
 		client := &http.Client{}
 		req, _ := http.NewRequest("POST", "https://slack.com/api/views.open", nil)
@@ -97,7 +97,7 @@ func main() {
 		body, err := ioutil.ReadAll(resp.Body)
 
 		return c.String(http.StatusOK, string(string(body)))
-	})
+	})*/
 	log.Printf("listening on port %s", port)
 	e.Logger.Fatal(e.Start(":" + port))
 }

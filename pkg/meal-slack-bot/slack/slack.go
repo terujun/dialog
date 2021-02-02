@@ -9,7 +9,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"path/filepath"
-	"strings"
 
 	"github.com/mattn/go-jsonpointer"
 	"github.com/terujun/dialog/pkg/meal-slack-bot/file"
@@ -103,15 +102,18 @@ func (repo *SlackRepository) OpenHydrationAddView(triggerID string) ([]byte, err
 
 func PostJSON(token string, command string, requestParamasJSON string) ([]byte, error) {
 	client := &http.Client{}
-	req, _ := http.NewRequest("POST", "https://slack.com/api/"+command, strings.NewReader(requestParamasJSON))
-	req.Header.Add("Content-type", "application/json")
-	req.Header.Add("Authorization", "Bearer "+token)
-	//req, _ := http.NewRequest("POST", "https://slack.com/api/views.open", strings.NewReader("test"))
+	//req, _ := http.NewRequest("POST", "https://slack.com/api/"+command, strings.NewReader(requestParamasJSON))
+	//req.Header.Add("Content-type", "application/json")
+	//req.Header.Add("Authorization", "Bearer "+token)
+	req, _ := http.NewRequest("POST", "https://slack.com/api/views.open", nil)
 
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("Body is")
+	fmt.Println(string(body))
 	return ioutil.ReadAll(resp.Body)
 }
