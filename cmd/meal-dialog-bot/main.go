@@ -141,7 +141,7 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 func HandleOpenHydrationForm(c echo.Context, appConfig config.Config, configsDirPath string, payload interface{}) error {
 
 	//非同期処理を記載
-	go func() {
+	go func(c echo.Context, configsDirPath string, payload interface{}) {
 		slackRepo := &slack.SlackRepository{
 			Token:        appConfig.Slack.Token,
 			ViewsDirPath: filepath.Join(configsDirPath, "/views"),
@@ -155,7 +155,7 @@ func HandleOpenHydrationForm(c echo.Context, appConfig config.Config, configsDir
 			c.Echo().Logger.Error(err)
 		}
 
-	}()
+	}(c, configsDirPath, payload)
 	// ステータス200でレスポンスを返す。
 	return c.String(http.StatusOK, "Ok")
 }
