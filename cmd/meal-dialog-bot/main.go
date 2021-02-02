@@ -84,6 +84,9 @@ func main() {
 	e.POST("/postarticle", func(c echo.Context) error {
 		return gateway(c, appConfig, configsDirPath)
 	})
+	e.GET("/test", func(c echo.Context) error {
+		return c.String(http.StatusOK, "Hello!")
+	})
 	log.Printf("listening on port %s", port)
 	e.Logger.Fatal(e.Start(":" + port))
 }
