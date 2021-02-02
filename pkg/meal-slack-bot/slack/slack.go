@@ -106,6 +106,7 @@ func PostJSON(token string, command string, requestParamasJSON string) ([]byte, 
 	req, _ := http.NewRequest("POST", "https://slack.com/api/"+command, strings.NewReader(requestParamasJSON))
 	req.Header.Add("Content-type", "application/json")
 	req.Header.Add("Authorization", "Bearer "+token)
+	fmt.Println(token)
 
 	resp, err := client.Do(req)
 	if err != nil {
