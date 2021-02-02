@@ -123,9 +123,7 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 		switch callbackID {
 		case "meal_reg_call":
 			//fmt.Printf("callbackID is %s", callbackID)
-			triggerID, _ := jsonpointer.Get(payload, "/trigger_id")
-			fmt.Println("trigger_id is ")
-			fmt.Println(triggerID.(string))
+			//triggerID, _ := jsonpointer.Get(payload, "/trigger_id")
 			return HandleOpenHydrationForm(c, appConfig, configsDirPath, payload)
 		default:
 			c.Echo().Logger.Warn("Unrecognized callbackID:", callbackID)
@@ -140,6 +138,9 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 
 func HandleOpenHydrationForm(c echo.Context, appConfig config.Config, configsDirPath string, payload interface{}) error {
 
+	triggerID, _ := jsonpointer.Get(payload, "/trigger_id")
+	fmt.Println("triggerID is ")
+	fmt.Println(triggerID)
 	//非同期処理を記載
 	go func(c echo.Context, configsDirPath string, payload interface{}) {
 		slackRepo := &slack.SlackRepository{
