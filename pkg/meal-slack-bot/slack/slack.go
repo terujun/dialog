@@ -82,7 +82,7 @@ func (repo *SlackRepository) OpenHydrationAddView(triggerID string) ([]byte, err
 	}
 
 	//triggerID→requestへの追加
-	err = jsonpointer.Set(requestParams, "trigger_id", triggerID)
+	err = jsonpointer.Set(requestParams, "/trigger_id", triggerID)
 	if err != nil {
 		return resp, err
 	}

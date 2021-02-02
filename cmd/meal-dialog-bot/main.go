@@ -138,9 +138,6 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 
 func HandleOpenHydrationForm(c echo.Context, appConfig config.Config, configsDirPath string, payload interface{}) error {
 
-	triggerID, _ := jsonpointer.Get(payload, "/trigger_id")
-	fmt.Println("triggerID is ")
-	fmt.Println(triggerID)
 	//非同期処理を記載
 	go func(c echo.Context, configsDirPath string, payload interface{}) {
 		slackRepo := &slack.SlackRepository{
@@ -149,11 +146,14 @@ func HandleOpenHydrationForm(c echo.Context, appConfig config.Config, configsDir
 		}
 
 		//triggerID取得
-		triggerID, _ := jsonpointer.Get(payload, "/trigger_id")
-		fmt.Println("triggerID は")
-		fmt.Println(triggerID.(string))
+		triggerID, err := jsonpointer.Get(payload, "/trigger_id")
+		if err != nil {
+			c.Echo().Logger.Error(err)
+		}
+		//fmt.Println("triggerID は")
+		//fmt.Println(triggerID.(string))
 
-		_, err := slackRepo.OpenHydrationAddView(triggerID.(string))
+		_, err = slackRepo.OpenHydrationAddView(triggerID.(string))
 		if err != nil {
 			c.Echo().Logger.Error(err)
 		}
