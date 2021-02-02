@@ -26,7 +26,7 @@ func readConfig(configsDirPath string, token string) (config.Config, error) {
 
 	//config構造体を宣言
 	config := config.Config{}
-	configFilePath := filepath.Join(configsDirPath, "config.json")
+	configFilePath := filepath.Join(configsDirPath, "config/config.json")
 
 	//ファイルの存在確認
 	if !file.FileExists(configFilePath) {
@@ -69,7 +69,7 @@ func main() {
 	//config場所取得
 	configsDirPath := os.Getenv("CONFIGDIRPATH")
 	if configsDirPath == "" {
-		configsDirPath = "/home/　go/dialog/configs/config/"
+		configsDirPath = "/home/go/dialog/configs/"
 		log.Printf("defaulting to configsDirPath %s", configsDirPath)
 	}
 
@@ -141,7 +141,6 @@ func HandleOpenHydrationForm(c echo.Context, appConfig config.Config, configsDir
 
 	//非同期処理を記載
 	go func() {
-		fmt.Println("go funcまできたよ")
 		slackRepo := &slack.SlackRepository{
 			Token:        appConfig.Slack.Token,
 			ViewsDirPath: filepath.Join(configsDirPath, "views"),

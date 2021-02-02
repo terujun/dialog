@@ -50,9 +50,8 @@ func (repo *SlackRepository) OpenHydrationAddView(triggerID string) ([]byte, err
 	var resp []byte
 	var requestParams, view interface{}
 
-	fmt.Println("OpenHydrationAddViewまできたよ")
 	//modalのviewフォーマットファイル確認
-	viewPath := filepath.Join(repo.ViewsDirPath, "modal_view.json")
+	viewPath := filepath.Join(repo.ViewsDirPath, "/modal_view.json")
 	if !file.FileExists(viewPath) {
 		return resp, fmt.Errorf("View file does not exeist: %s", viewPath)
 	}
