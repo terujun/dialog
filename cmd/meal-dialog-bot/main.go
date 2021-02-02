@@ -97,8 +97,6 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "Error")
 	}
-	fmt.Println("payload 表示")
-	fmt.Println(string(payloadJSON))
 	//type取得
 	pointRequesttype, err := jsonpointer.Get(payload, "/type")
 	if err != nil {
@@ -149,6 +147,8 @@ func HandleOpenHydrationForm(c echo.Context, appConfig config.Config, configsDir
 
 		//triggerID取得
 		triggerID, _ := jsonpointer.Get(payload, "/trigger_id")
+		fmt.Println("triggerID は")
+		fmt.Println(triggerID.(string))
 
 		_, err := slackRepo.OpenHydrationAddView(triggerID.(string))
 		if err != nil {
