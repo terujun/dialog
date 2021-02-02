@@ -14,7 +14,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/labstack/echo"
 	"github.com/mattn/go-jsonpointer"
@@ -88,7 +87,7 @@ func main() {
 	})
 	e.GET("/test", func(c echo.Context) error {
 		client := &http.Client{}
-		req, _ := http.NewRequest("POST", "https://slack.com/api/views.open", strings.NewReader("test"))
+		req, _ := http.NewRequest("POST", "https://slack.com/api/views.open", nil)
 
 		resp, err := client.Do(req)
 		if err != nil {
