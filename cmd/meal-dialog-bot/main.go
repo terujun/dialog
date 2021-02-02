@@ -106,15 +106,12 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 	payloadJSON := c.FormValue("payload")
 	var payload interface{}
 
-	//中身確認用
-	fmt.Println("payloadJSON is")
-	fmt.Println(string([]byte(payloadJSON)))
-
 	//payloadをJSONとして取得
 	err := json.Unmarshal([]byte(payloadJSON), &payload)
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "Error")
 	}
+
 	//type取得
 	pointRequesttype, err := jsonpointer.Get(payload, "/type")
 	if err != nil {
@@ -131,6 +128,16 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 	case "shortcut":
 		iCallbackID, _ = jsonpointer.Get(payload, "/callback_id")
 	case "view_submit":
+		//中身確認用
+		fmt.Println("payloadJSON is")
+		fmt.Println(string([]byte(payloadJSON)))
+		ipaypay, err := jsonpointer.Get(payload, "/view")
+		if err != nil {
+			return c.String(http.StatusInternalServerError, "Error")
+		}
+		paypay := ipaypay.(string)
+		fmt.Println(paypay)
+
 		iCallbackID, _ = jsonpointer.Get(payload, "/view/callback_id")
 	}
 	callbackID := iCallbackID.(string)
