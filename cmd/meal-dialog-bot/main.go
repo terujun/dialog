@@ -153,26 +153,26 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 func HandleOpenHydrationForm(c echo.Context, appConfig config.Config, configsDirPath string, payload interface{}) error {
 
 	//非同期処理を記載
-	go func(c echo.Context, configsDirPath string, payload interface{}) {
-		slackRepo := &slack.SlackRepository{
-			Token:        appConfig.Slack.Token,
-			ViewsDirPath: filepath.Join(configsDirPath, "/views"),
-		}
+	//go func(c echo.Context, configsDirPath string, payload interface{}) {
+	slackRepo := &slack.SlackRepository{
+		Token:        appConfig.Slack.Token,
+		ViewsDirPath: filepath.Join(configsDirPath, "/views"),
+	}
 
-		//triggerID取得
-		triggerID, err := jsonpointer.Get(payload, "/trigger_id")
-		if err != nil {
-			c.Echo().Logger.Error(err)
-		}
-		//fmt.Println("triggerID は")
-		//fmt.Println(triggerID.(string))
+	//triggerID取得
+	triggerID, err := jsonpointer.Get(payload, "/trigger_id")
+	if err != nil {
+		c.Echo().Logger.Error(err)
+	}
+	//fmt.Println("triggerID は")
+	//fmt.Println(triggerID.(string))
 
-		_, err = slackRepo.OpenHydrationAddView(triggerID.(string))
-		if err != nil {
-			c.Echo().Logger.Error(err)
-		}
+	_, err = slackRepo.OpenHydrationAddView(triggerID.(string))
+	if err != nil {
+		c.Echo().Logger.Error(err)
+	}
 
-	}(c, configsDirPath, payload)
+	//}(c, configsDirPath, payload)
 	// ステータス200でレスポンスを返す。
 	return c.String(http.StatusOK, "Ok")
 }
