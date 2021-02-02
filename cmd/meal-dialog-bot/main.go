@@ -98,7 +98,7 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 		return c.String(http.StatusInternalServerError, "Error")
 	}
 	fmt.Println("payload 表示")
-	fmt.Println(payload.(string))
+	fmt.Println(string(payloadJSON))
 	//type取得
 	pointRequesttype, err := jsonpointer.Get(payload, "/type")
 	if err != nil {
