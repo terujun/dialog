@@ -112,7 +112,6 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 	switch requestType {
 	case "shortcut":
 		iCallbackID, _ = jsonpointer.Get(payload, "/callback_id")
-		fmt.Printf("callbakid is getted")
 	case "view_submit":
 		iCallbackID, _ = jsonpointer.Get(payload, "/view/callback_id")
 	}
@@ -124,6 +123,9 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 		switch callbackID {
 		case "meal_reg_call":
 			//fmt.Printf("callbackID is %s", callbackID)
+			triggerID, _ := jsonpointer.Get(payload, "/trigger_id")
+			fmt.Println("trigger_id is ")
+			fmt.Println(triggerID.(string))
 			return HandleOpenHydrationForm(c, appConfig, configsDirPath, payload)
 		default:
 			c.Echo().Logger.Warn("Unrecognized callbackID:", callbackID)
