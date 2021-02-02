@@ -138,7 +138,9 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 		case "meal_reg_call":
 			//fmt.Printf("callbackID is %s", callbackID)
 			//triggerID, _ := jsonpointer.Get(payload, "/trigger_id")
-			return HandleOpenHydrationForm(c, appConfig, configsDirPath, payload)
+			return HandleOpenMealmodalForm(c, appConfig, configsDirPath, payload)
+		case "mealreg_modal_receive":
+			return HandleMealmodalFormSubmission(c, appConfig, configsDirPath, payload)
 		default:
 			c.Echo().Logger.Warn("Unrecognized callbackID:", callbackID)
 		}
@@ -150,7 +152,7 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 	return c.String(http.StatusOK, "Ok")
 }
 
-func HandleOpenHydrationForm(c echo.Context, appConfig config.Config, configsDirPath string, payload interface{}) error {
+func HandleOpenMealmodalForm(c echo.Context, appConfig config.Config, configsDirPath string, payload interface{}) error {
 
 	//非同期処理を記載
 	//go func(c echo.Context, configsDirPath string, payload interface{}) {
@@ -167,7 +169,7 @@ func HandleOpenHydrationForm(c echo.Context, appConfig config.Config, configsDir
 	//fmt.Println("triggerID は")
 	//fmt.Println(triggerID.(string))
 
-	_, err = slackRepo.OpenHydrationAddView(triggerID.(string))
+	_, err = slackRepo.OpenMealmodalAddView(triggerID.(string))
 	if err != nil {
 		c.Echo().Logger.Error(err)
 	}
@@ -177,11 +179,6 @@ func HandleOpenHydrationForm(c echo.Context, appConfig config.Config, configsDir
 	return c.String(http.StatusOK, "Ok")
 }
 
-/*
-func (repo *SlackRepository) OpenHydrationAddView(triggerID string) ([]byte, error) {
-	var err error
-	var res []byte
-	var requestparam, view interface{}
-
-	viewpath := repositories.SlackRepository
-}*/
+func HandleMealmodalFormSubmission(c echo.Context, appConfig config.Config, configsDirPath string, payload interface{}) error {
+	return c.String(http.StatusOK, "")
+}

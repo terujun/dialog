@@ -45,7 +45,7 @@ type Config struct {
 	Token string `json:"token"`
 }
 
-func (repo *SlackRepository) OpenHydrationAddView(triggerID string) ([]byte, error) {
+func (repo *SlackRepository) OpenMealmodalAddView(triggerID string) ([]byte, error) {
 	var err error
 	var resp []byte
 	var requestParams, view interface{}
