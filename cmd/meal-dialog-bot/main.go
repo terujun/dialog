@@ -106,6 +106,10 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 	payloadJSON := c.FormValue("payload")
 	var payload interface{}
 
+	//中身確認用
+	fmt.Println("payloadJSON is")
+	fmt.Println(string([]byte(payloadJSON)))
+
 	//payloadをJSONとして取得
 	err := json.Unmarshal([]byte(payloadJSON), &payload)
 	if err != nil {
@@ -180,5 +184,8 @@ func HandleOpenMealmodalForm(c echo.Context, appConfig config.Config, configsDir
 }
 
 func HandleMealmodalFormSubmission(c echo.Context, appConfig config.Config, configsDirPath string, payload interface{}) error {
+
+	//ここでひたすら欲しい情報取得
+
 	return c.String(http.StatusOK, "")
 }
