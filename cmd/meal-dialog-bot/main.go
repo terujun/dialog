@@ -26,7 +26,7 @@ func readConfig(configsDirPath string, token string) (config.Config, error) {
 
 	//config構造体を宣言
 	config := config.Config{}
-	configFilePath := filepath.Join(configsDirPath, "config/config.json")
+	configFilePath := filepath.Join(configsDirPath, "/config/config.json")
 
 	//ファイルの存在確認
 	if !file.FileExists(configFilePath) {
@@ -97,7 +97,8 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "Error")
 	}
-
+	fmt.Println("payload 表示")
+	fmt.Println(payload.(string))
 	//type取得
 	pointRequesttype, err := jsonpointer.Get(payload, "/type")
 	if err != nil {
@@ -143,7 +144,7 @@ func HandleOpenHydrationForm(c echo.Context, appConfig config.Config, configsDir
 	go func() {
 		slackRepo := &slack.SlackRepository{
 			Token:        appConfig.Slack.Token,
-			ViewsDirPath: filepath.Join(configsDirPath, "views"),
+			ViewsDirPath: filepath.Join(configsDirPath, "/views"),
 		}
 
 		//triggerID取得
