@@ -9,10 +9,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/labstack/echo"
 	"github.com/mattn/go-jsonpointer"
@@ -85,7 +87,17 @@ func main() {
 		return gateway(c, appConfig, configsDirPath)
 	})
 	e.GET("/test", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello!")
+		client := &http.Client{}
+		req, _ := http.NewRequest("POST", "https://slack.com/api/views.open", strings.NewReader("test"))
+
+		resp, err := client.Do(req)
+		if err != nil {
+			return c.String(http.StatusOK, "Error!!")
+		}
+		defer resp.Body.Close()
+		body, err := ioutil.ReadAll(resp.Body)
+
+		return c.String(http.StatusOK, string(string(body)))
 	})
 	log.Printf("listening on port %s", port)
 	e.Logger.Fatal(e.Start(":" + port))
