@@ -180,6 +180,7 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 			return c.String(http.StatusInternalServerError, "Error")
 		}
 		paypay := ipaypay.(string)
+		fmt.Println("paypay is ")
 		fmt.Println(paypay)
 
 		iCallbackID, _ = jsonpointer.Get(payload, "/view/callback_id")
