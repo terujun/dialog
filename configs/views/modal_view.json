@@ -11,6 +11,7 @@
     "blocks": [
         {
             "type": "input",
+            "block_id" : "image",
             "element": {
                 "type": "plain_text_input",
                 "action_id": "image_URL",
@@ -36,6 +37,7 @@
         },
         {
             "type": "input",
+            "block_id" : "umami",
             "element": {
                 "type": "radio_buttons",
                 "options": [
@@ -56,7 +58,7 @@
                         "value": "mazui"
                     }
                 ],
-                "action_id": "radio_buttons-action"
+                "action_id": "radio_buttons_action"
             },
             "label": {
                 "type": "plain_text",
