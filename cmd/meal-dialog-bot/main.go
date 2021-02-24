@@ -168,11 +168,10 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 
 	//type別にコールバックIDを取得する
 	var iCallbackID interface{}
-	log.Printf("受信できてなくない？")
 	switch requestType {
 	case "shortcut":
 		iCallbackID, _ = jsonpointer.Get(payload, "/callback_id")
-	case "view_submit":
+	case "view_submission":
 		//中身確認用
 		fmt.Println("payloadJSON is")
 		fmt.Println(string([]byte(payloadJSON)))
