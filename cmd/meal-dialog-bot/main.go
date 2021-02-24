@@ -230,7 +230,7 @@ func HandleMealmodalFormSubmission(c echo.Context, appConfig config.Config, conf
 	fmt.Println("modalの値とるよ")
 
 	//image_URL取得
-	iimageURL, err := jsonpointer.Get(payload, "/view/state/values/image_URL")
+	iimageURL, err := jsonpointer.Get(payload, "/view/state/values/image_URL/value")
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "Error")
 	}
