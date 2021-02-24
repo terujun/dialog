@@ -7,6 +7,7 @@ received from Slack.
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -14,6 +15,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"cloud.google.com/go/firestore"
 	"github.com/labstack/echo"
 	"github.com/mattn/go-jsonpointer"
 	"github.com/terujun/dialog/pkg/meal-slack-bot/config"
@@ -51,6 +53,19 @@ func readConfig(configsDirPath string, token string) (config.Config, error) {
 	return config, nil
 }
 
+func createClient(ctx context.Context) (*firestore.Client, error) {
+	//後で以下のプロジェクトIDは抜き出して、環境変数としてとってくる
+	projectID := "ci-cd-302120"
+
+	client, err := firestore.NewClient(ctx, projectID)
+	if err != nil {
+		return client, err
+	}
+
+	return client, nil
+
+}
+
 func main() {
 	//ポート情報取得
 	port := os.Getenv("PORT")
@@ -75,6 +90,35 @@ func main() {
 
 	//config読み込み
 	appConfig, err := readConfig(configsDirPath, token)
+	if err != nil {
+		log.Printf("error! %s", err)
+	}
+
+	//Firestore Client作成
+	ctxFirestoreClient := context.Background()
+	fireStoreClient, err := createClient(ctxFirestoreClient)
+	defer fireStoreClient.Close()
+	if err != nil {
+		log.Printf("error! %s", err)
+	}
+
+	//Firestoreへのデータ挿入
+	_, _, err = fireStoreClient.Collection("test").Add(ctxFirestoreClient, map[string]interface{}{
+		"first": "Adaaaa",
+		"last":  "Lovelace",
+		"born":  1820,
+		"test":  "tttt",
+	})
+	if err != nil {
+		log.Printf("error! %s", err)
+	}
+
+	_, _, err = fireStoreClient.Collection("test").Add(ctxFirestoreClient, map[string]interface{}{
+		"first": "Adaaaa",
+		"last":  "Lovelace",
+		"born":  1820,
+		"test":  "tttt",
+	})
 	if err != nil {
 		log.Printf("error! %s", err)
 	}
