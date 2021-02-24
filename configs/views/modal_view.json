@@ -13,7 +13,7 @@
             "type": "input",
             "element": {
                 "type": "plain_text_input",
-                "action_id": "image URL",
+                "action_id": "image_URL",
                 "placeholder": {
                     "type": "plain_text",
                     "text": "https://〜 Paste your uploaded image's URL"

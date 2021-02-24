@@ -172,17 +172,6 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 	case "shortcut":
 		iCallbackID, _ = jsonpointer.Get(payload, "/callback_id")
 	case "view_submission":
-		//中身確認用
-		fmt.Println("payloadJSON is")
-		fmt.Println(string([]byte(payloadJSON)))
-		ipaypay, err := jsonpointer.Get(payload, "/view/id")
-		if err != nil {
-			return c.String(http.StatusInternalServerError, "Error")
-		}
-		paypay := ipaypay.(string)
-		fmt.Println("paypay is ")
-		fmt.Println(paypay)
-
 		iCallbackID, _ = jsonpointer.Get(payload, "/view/callback_id")
 	}
 	callbackID := iCallbackID.(string)
@@ -238,6 +227,16 @@ func HandleOpenMealmodalForm(c echo.Context, appConfig config.Config, configsDir
 func HandleMealmodalFormSubmission(c echo.Context, appConfig config.Config, configsDirPath string, payload interface{}) error {
 
 	//ここでひたすら欲しい情報取得
+	fmt.Println("modalの値とるよ")
+
+	//image_URL取得
+	iimageURL, err := jsonpointer.Get(payload, "/view/state/values/image_URL")
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "Error")
+	}
+	imageURL := iimageURL.(string)
+	fmt.Println("image_url is ")
+	fmt.Println(imageURL)
 
 	return c.String(http.StatusOK, "")
 }
