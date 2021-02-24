@@ -175,7 +175,7 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 		//中身確認用
 		fmt.Println("payloadJSON is")
 		fmt.Println(string([]byte(payloadJSON)))
-		ipaypay, err := jsonpointer.Get(payload, "/view")
+		ipaypay, err := jsonpointer.Get(payload, "/view/id")
 		if err != nil {
 			return c.String(http.StatusInternalServerError, "Error")
 		}
