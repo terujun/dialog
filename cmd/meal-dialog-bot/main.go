@@ -235,7 +235,6 @@ func HandleMealmodalFormSubmission(c echo.Context, appConfig config.Config, conf
 		return c.String(http.StatusInternalServerError, "Error")
 	}
 	imageURL := iimageURL.(string)
-	fmt.Println("image_url is ")
 	fmt.Println(imageURL)
 
 	//umai or mazui 取得
@@ -248,7 +247,7 @@ func HandleMealmodalFormSubmission(c echo.Context, appConfig config.Config, conf
 	fmt.Println(ajihyoka)
 
 	//kinds 取得
-	ikinds, err := jsonpointer.Get(payload, "/view/state/values/kinds/static_select-action/value")
+	ikinds, err := jsonpointer.Get(payload, "/view/state/values/kinds/food/value")
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "Error")
 	}
