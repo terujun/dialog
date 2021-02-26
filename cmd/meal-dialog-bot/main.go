@@ -238,13 +238,14 @@ func HandleMealmodalFormSubmission(c echo.Context, appConfig config.Config, conf
 	fmt.Println(imageURL)
 
 	//umai or mazui 取得
-	/*iajihyoka, err := jsonpointer.Get(payload, "/view/state/values/umami/serected_umami/selected_option/value")
+	iajihyoka, err := jsonpointer.Get(payload, "/view/state/values/umami/serected_umami/selected_option/value")
 	if err != nil {
+		fmt.Println("とるの失敗しとる")
 		return c.String(http.StatusInternalServerError, "Error")
 	}
 	ajihyoka := iajihyoka.(string)
 	fmt.Println("ajihyoka is ")
-	fmt.Println(ajihyoka)*/
+	fmt.Println(ajihyoka)
 
 	//kinds 取得
 	ikinds, err := jsonpointer.Get(payload, "/view/state/values/kinds/food/selected_option/value")
