@@ -58,7 +58,7 @@
                         "value": "mazui"
                     }
                 ],
-                "action_id": "radio_buttons_action"
+                "action_id": "serected_umami"
             },
             "label": {
                 "type": "plain_text",
@@ -68,6 +68,7 @@
         },
         {
             "type": "input",
+            "block_id" : "kinds",
             "element": {
                 "type": "static_select",
                 "placeholder": {
@@ -117,7 +118,7 @@
                         "value": "other_genres"
                     }
                 ],
-                "action_id": "static_select-action"
+                "action_id": "food"
             },
             "label": {
                 "type": "plain_text",
@@ -129,6 +130,7 @@
             "type": "input",
             "element": {
                 "type": "static_select",
+                "block_id" : "website",
                 "placeholder": {
                     "type": "plain_text",
                     "text": "Select a website",
@@ -184,7 +186,7 @@
                         "value": "other_websites"
                     }
                 ],
-                "action_id": "static_select-action"
+                "action_id": "serected_site"
             },
             "label": {
                 "type": "plain_text",
@@ -194,6 +196,7 @@
         },
         {
             "type": "input",
+            "block_id" : "store",
             "element": {
                 "type": "plain_text_input",
                 "action_id": "store_name",
