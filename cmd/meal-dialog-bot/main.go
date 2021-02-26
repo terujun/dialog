@@ -238,7 +238,7 @@ func HandleMealmodalFormSubmission(c echo.Context, appConfig config.Config, conf
 	fmt.Println(imageURL)
 
 	//umai or mazui 取得
-	iajihyoka, err := jsonpointer.Get(payload, "/view/state/values/umami/serected_umami/selected_option/value")
+	iajihyoka, err := jsonpointer.Get(payload, "/view/state/values/umami/serected_umami")
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "Error")
 	}
