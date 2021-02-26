@@ -95,15 +95,15 @@ func main() {
 	}
 
 	//Firestore Client作成
-	ctxFirestoreClient := context.Background()
+	/*ctxFirestoreClient := context.Background()
 	fireStoreClient, err := createClient(ctxFirestoreClient)
 	defer fireStoreClient.Close()
 	if err != nil {
 		log.Printf("error! %s", err)
-	}
+	}*/
 
 	//Firestoreへのデータ挿入
-	_, _, err = fireStoreClient.Collection("test").Add(ctxFirestoreClient, map[string]interface{}{
+	/*_, _, err = fireStoreClient.Collection("test").Add(ctxFirestoreClient, map[string]interface{}{
 		"first": "Adaaaa",
 		"last":  "Lovelace",
 		"born":  1820,
@@ -121,7 +121,7 @@ func main() {
 	})
 	if err != nil {
 		log.Printf("error! %s", err)
-	}
+	}*/
 
 	//サーバスタート
 	e := echo.New()
@@ -246,6 +246,15 @@ func HandleMealmodalFormSubmission(c echo.Context, appConfig config.Config, conf
 	ajihyoka := iajihyoka.(string)
 	fmt.Println("ajihyoka is ")
 	fmt.Println(ajihyoka)
+
+	//kinds 取得
+	ikinds, err := jsonpointer.Get(payload, "/view/state/values/kinds/static_select-action/value")
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "Error")
+	}
+	kinds := ikinds.(string)
+	fmt.Println("kinds is ")
+	fmt.Println(kinds)
 
 	return c.String(http.StatusOK, "")
 }
