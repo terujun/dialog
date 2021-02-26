@@ -238,7 +238,7 @@ func HandleMealmodalFormSubmission(c echo.Context, appConfig config.Config, conf
 	fmt.Println(imageURL)
 
 	//umai or mazui 取得
-	iajihyoka, err := jsonpointer.Get(payload, "/view/state/values/umami/radio_buttons_action/value")
+	iajihyoka, err := jsonpointer.Get(payload, "/view/state/values/umami/serected_umami/selected_option/value")
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "Error")
 	}
@@ -247,13 +247,31 @@ func HandleMealmodalFormSubmission(c echo.Context, appConfig config.Config, conf
 	fmt.Println(ajihyoka)
 
 	//kinds 取得
-	ikinds, err := jsonpointer.Get(payload, "/view/state/values/kinds/food/value")
+	ikinds, err := jsonpointer.Get(payload, "/view/state/values/kinds/food/selected_option/value")
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "Error")
 	}
 	kinds := ikinds.(string)
 	fmt.Println("kinds is ")
 	fmt.Println(kinds)
+
+	//iwebsite 取得
+	iwebsite, err := jsonpointer.Get(payload, "/view/state/values/website/serected_site/selected_option/value")
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "Error")
+	}
+	website := iwebsite.(string)
+	fmt.Println("website is ")
+	fmt.Println(website)
+
+	//store 取得
+	istore, err := jsonpointer.Get(payload, "/view/state/values/store/store_name/value")
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "Error")
+	}
+	store := istore.(string)
+	fmt.Println("store is ")
+	fmt.Println(store)
 
 	return c.String(http.StatusOK, "")
 }
