@@ -36,10 +36,10 @@ func readConfig(configsDirPath string, token string) (config.Config, error) {
 	}
 
 	//config.jsonファイルを読み込み
-	//	jsonContent, err := ioutil.ReadFile(configFilePath)
-	//	if err != nil {
-	//	return config, err
-	//}
+	// jsonContent, err := ioutil.ReadFile(configFilePath)
+	// if err != nil {
+	// 	return config, err
+	// }
 
 	//config.json→config構造体へ読み込み
 	/*今は読み込む物なし
@@ -163,9 +163,6 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 	}
 	requestType := pointRequesttype.(string)
 
-	//受信確認あとで消す。
-	log.Printf("受信したで %s", requestType)
-
 	//type別にコールバックIDを取得する
 	var iCallbackID interface{}
 	switch requestType {
@@ -216,7 +213,6 @@ func HandleOpenMealmodalForm(c echo.Context, appConfig config.Config, configsDir
 
 	_, err = slackRepo.OpenMealmodalAddView(triggerID.(string))
 	if err != nil {
-		fmt.Println("もしかしてオープンモーダル事故ってる？")
 		c.Echo().Logger.Error(err)
 	}
 
@@ -228,53 +224,67 @@ func HandleOpenMealmodalForm(c echo.Context, appConfig config.Config, configsDir
 func HandleMealmodalFormSubmission(c echo.Context, appConfig config.Config, configsDirPath string, payload interface{}) error {
 
 	//ここでひたすら欲しい情報取得
-	fmt.Println("modalの値とるよ")
-	var err error
-	err = nil
 	//image_URL取得
-	iimageURL, _ := jsonpointer.Get(payload, "/view/state/values/image/image_URL/value")
+	iimageURL, err := jsonpointer.Get(payload, "/view/state/values/image/image_URL/value")
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "Error")
 	}
 	imageURL := iimageURL.(string)
-	fmt.Println(imageURL)
 
 	//umai or mazui 取得
-	iajihyoka, _ := jsonpointer.Get(payload, "/view/state/values/umami/serected_umami/selected_option/value")
+	iajihyoka, err := jsonpointer.Get(payload, "/view/state/values/umami/serected_umami/selected_option/value")
 	if err != nil {
-		fmt.Println("とるの失敗しとる")
 		return c.String(http.StatusInternalServerError, "Error")
 	}
 	ajihyoka := iajihyoka.(string)
-	fmt.Println("ajihyoka is ")
-	fmt.Println(ajihyoka)
 
 	//kinds 取得
-	ikinds, _ := jsonpointer.Get(payload, "/view/state/values/kinds/food/selected_option/value")
+	ikinds, err := jsonpointer.Get(payload, "/view/state/values/kinds/food/selected_option/value")
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "Error")
 	}
 	kinds := ikinds.(string)
-	fmt.Println("kinds is ")
-	fmt.Println(kinds)
 
 	//iwebsite 取得
-	iwebsite, _ := jsonpointer.Get(payload, "/view/state/values/website/serected_site/selected_option/value")
+	iwebsite, err := jsonpointer.Get(payload, "/view/state/values/website/serected_site/selected_option/value")
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "Error")
 	}
 	website := iwebsite.(string)
-	fmt.Println("website is ")
-	fmt.Println(website)
 
 	//store 取得
-	istore, _ := jsonpointer.Get(payload, "/view/state/values/store/store_name/value")
+	istore, err := jsonpointer.Get(payload, "/view/state/values/store/store_name/value")
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "Error")
 	}
 	store := istore.(string)
-	fmt.Println("store is ")
-	fmt.Println(store)
+	go func() {
+		GourmetData := map[string]interface{}{
+			"imageURL": imageURL,
+			"ajihyoka": ajihyoka,
+			"kinds":    kinds,
+			"website":  website,
+			"store":    store,
+		}
+		//Firestore Client作成
+		ctxFirestoreClient := context.Background()
+		fireStoreClient, err := createClient(ctxFirestoreClient)
+		defer fireStoreClient.Close()
+		if err != nil {
+			log.Printf("error! %s", err)
+		}
+
+		//Firestoreへのデータ挿入
+		_, _, err = fireStoreClient.Collection("fooddata").Add(ctxFirestoreClient, GourmetData)
+		if err != nil {
+			log.Printf("error! %s", err)
+		}
+
+		if err != nil {
+			log.Printf("error! %s", err)
+		}
+
+	}()
 
 	return c.String(http.StatusOK, "")
 }
