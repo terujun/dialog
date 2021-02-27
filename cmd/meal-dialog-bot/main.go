@@ -216,6 +216,7 @@ func HandleOpenMealmodalForm(c echo.Context, appConfig config.Config, configsDir
 
 	_, err = slackRepo.OpenMealmodalAddView(triggerID.(string))
 	if err != nil {
+		fmt.Println("もしかしてオープンモーダル事故ってる？")
 		c.Echo().Logger.Error(err)
 	}
 
