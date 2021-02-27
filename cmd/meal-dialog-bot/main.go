@@ -128,6 +128,9 @@ func main() {
 	e.POST("/postarticle", func(c echo.Context) error {
 		return gateway(c, appConfig, configsDirPath)
 	})
+	e.POST("/search", func(c echo.Context) error {
+		return gateway(c, appConfig, configsDirPath)
+	})
 	/*テスト用
 	e.GET("/test", func(c echo.Context) error {
 		client := &http.Client{}
@@ -183,6 +186,7 @@ func gateway(c echo.Context, appConfig config.Config, configsDirPath string) err
 			return HandleOpenMealmodalForm(c, appConfig, configsDirPath, payload)
 		case "mealreg_modal_receive":
 			return HandleMealmodalFormSubmission(c, appConfig, configsDirPath, payload)
+		case "meal_search":
 		default:
 			c.Echo().Logger.Warn("Unrecognized callbackID:", callbackID)
 		}
