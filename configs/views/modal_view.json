@@ -128,9 +128,9 @@
         },
         {
             "type": "input",
+            "block_id" : "website",
             "element": {
                 "type": "static_select",
-                "block_id" : "website",
                 "placeholder": {
                     "type": "plain_text",
                     "text": "Select a website",
@@ -212,6 +212,7 @@
         },
         {
             "type": "input",
+            "block_id" : "memo",
             "element": {
                 "type": "plain_text_input",
                 "multiline": true,
