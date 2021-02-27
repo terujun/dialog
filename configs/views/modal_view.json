@@ -216,7 +216,7 @@
             "element": {
                 "type": "plain_text_input",
                 "multiline": true,
-                "action_id": "plain_text_input-action"
+                "action_id": "kuchikomi"
             },
             "label": {
                 "type": "plain_text",

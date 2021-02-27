@@ -260,13 +260,22 @@ func HandleMealmodalFormSubmission(c echo.Context, appConfig config.Config, conf
 		return c.String(http.StatusInternalServerError, "Error")
 	}
 	store := istore.(string)
+
+	//kuchikomi 取得
+	ikuchikomi, err := jsonpointer.Get(payload, "/view/state/values/memo/kuchikomi/value")
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "Error")
+	}
+	kuchikomi := ikuchikomi.(string)
+
 	go func() {
 		GourmetData := map[string]interface{}{
-			"imageURL": imageURL,
-			"ajihyoka": ajihyoka,
-			"kinds":    kinds,
-			"website":  website,
-			"store":    store,
+			"imageURL":  imageURL,
+			"ajihyoka":  ajihyoka,
+			"kinds":     kinds,
+			"website":   website,
+			"store":     store,
+			"kuchikomi": kuchikomi,
 		}
 		//Firestore Client作成
 		ctxFirestoreClient := context.Background()
