@@ -128,9 +128,7 @@ func main() {
 	e.POST("/postarticle", func(c echo.Context) error {
 		return gateway(c, appConfig, configsDirPath)
 	})
-	e.POST("/search", func(c echo.Context) error {
-		return gateway(c, appConfig, configsDirPath)
-	})
+
 	/*テスト用
 	e.GET("/test", func(c echo.Context) error {
 		client := &http.Client{}
