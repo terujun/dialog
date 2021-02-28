@@ -80,18 +80,34 @@
                     {
                         "text": {
                             "type": "plain_text",
-                            "text": "酒",
+                            "text": "飲み物",
                             "emoji": true
                         },
-                        "value": "sake"
+                        "value": "drink"
                     },
                     {
                         "text": {
                             "type": "plain_text",
-                            "text": "アジア",
+                            "text": "韓国料理",
                             "emoji": true
                         },
-                        "value": "asia"
+                        "value": "korea"
+                    },
+                    {
+                        "text": {
+                            "type": "plain_text",
+                            "text": "中華",
+                            "emoji": true
+                        },
+                        "value": "china"
+                    },
+                    {
+                        "text": {
+                            "type": "plain_text",
+                            "text": "ベジタブル",
+                            "emoji": true
+                        },
+                        "value": "Vegetables"
                     },
                     {
                         "text": {
